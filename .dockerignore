@@ -1,0 +1,11 @@
+.git
+.env
+bin
+data
+tmp
+web/node_modules
+web/dist
+webui/dist
+*.exe
+*.md
+.DS_Store

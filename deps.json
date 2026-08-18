@@ -1,0 +1,19 @@
+{
+  "xray": {
+    "version": "v26.3.27",
+    "assets": {
+      "linux_amd64": "https://github.com/XTLS/Xray-core/releases/download/v26.3.27/Xray-linux-64.zip",
+      "linux_arm64": "https://github.com/XTLS/Xray-core/releases/download/v26.3.27/Xray-linux-arm64-v8a.zip",
+      "darwin_amd64": "https://github.com/XTLS/Xray-core/releases/download/v26.3.27/Xray-macos-64.zip",
+      "darwin_arm64": "https://github.com/XTLS/Xray-core/releases/download/v26.3.27/Xray-macos-arm64-v8a.zip"
+    }
+  },
+  "geocheck": {
+    "version": "v0.2.4",
+    "assets": {
+      "linux_amd64": "https://github.com/remnawave/geocheck/releases/download/v0.2.4/geocheck_0.2.4_linux_amd64.tar.gz",
+      "linux_arm64": "https://github.com/remnawave/geocheck/releases/download/v0.2.4/geocheck_0.2.4_linux_arm64.tar.gz",
+      "darwin": "https://github.com/remnawave/geocheck/releases/download/v0.2.4/geocheck_0.2.4_darwin_all.tar.gz"
+    }
+  }
+}

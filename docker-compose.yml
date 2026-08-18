@@ -1,0 +1,17 @@
+services:
+  xray-geocheck:
+    build: .
+    container_name: xray-geocheck
+    ports:
+      - "8080:8080"
+      - "3113:3113"
+    cap_add:
+      - NET_RAW
+    env_file:
+      - .env
+    volumes:
+      - geocheck-data:/data
+    restart: unless-stopped
+
+volumes:
+  geocheck-data:

@@ -1,0 +1,9 @@
+.env
+bin/
+data/
+tmp/
+web/node_modules/
+web/dist/
+*.exe
+*.log
+.DS_Store
