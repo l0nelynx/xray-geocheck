@@ -6,6 +6,9 @@ import { ProxyRow } from "@/components/ProxyRow";
 import { PROXY_GRID, apiUrl, fmtTime } from "@/lib/utils";
 import { usePrivacy } from "@/lib/privacy";
 import type { Snapshot } from "@/lib/types";
+import demoSnapshot from "@/demo/snapshot.json";
+
+const isDemo = import.meta.env.VITE_DEMO === "true";
 
 const empty: Snapshot = {
   subscription: { ok: false, hostCount: 0, fetchedAt: "", userAgent: "" },
@@ -15,8 +18,12 @@ const empty: Snapshot = {
   proxies: [],
 };
 
+function sleep(ms: number) {
+  return new Promise((resolve) => window.setTimeout(resolve, ms));
+}
+
 export default function App() {
-  const [snap, setSnap] = useState<Snapshot>(empty);
+  const [snap, setSnap] = useState<Snapshot>(isDemo ? (demoSnapshot as Snapshot) : empty);
   const [error, setError] = useState<string | null>(null);
   const [openId, setOpenId] = useState<string | null>(null);
   const [pendingAll, setPendingAll] = useState(false);
@@ -24,6 +31,7 @@ export default function App() {
   const { redact, toggle: togglePrivacy } = usePrivacy();
 
   useEffect(() => {
+    if (isDemo) return;
     let alive = true;
     const tick = async () => {
       try {
@@ -71,6 +79,11 @@ export default function App() {
 
   async function refreshAll() {
     setPendingAll(true);
+    if (isDemo) {
+      await sleep(600);
+      setPendingAll(false);
+      return;
+    }
     try {
       const res = await fetch(apiUrl("api/refresh"), { method: "POST" });
       if (!res.ok) throw new Error(`refresh ${res.status}`);
@@ -82,6 +95,15 @@ export default function App() {
 
   async function refreshOne(id: string) {
     setPendingIds((prev) => new Set(prev).add(id));
+    if (isDemo) {
+      await sleep(600);
+      setPendingIds((prev) => {
+        const next = new Set(prev);
+        next.delete(id);
+        return next;
+      });
+      return;
+    }
     try {
       const res = await fetch(apiUrl("api/refresh/proxy"), {
         method: "POST",
@@ -113,6 +135,7 @@ export default function App() {
             Latency, geolocation consensus and reputation for every subscription
             egress IP. Ping is an HTTP GET through the local SOCKS5 fronted by
             xray-core.
+            {isDemo ? " This page is a static demo with sample data." : ""}
           </p>
         </div>
         <div className="flex flex-wrap items-end gap-2">
@@ -150,7 +173,11 @@ export default function App() {
             variant="outline"
             onClick={() => void refreshAll()}
             disabled={refreshingAll}
-            title="Re-fetch subscription, then ping and geocheck every proxy"
+            title={
+              isDemo
+                ? "Demo mode — live refresh is disabled"
+                : "Re-fetch subscription, then ping and geocheck every proxy"
+            }
           >
             {refreshingAll ? (
               <Loader2 className="mr-2 h-4 w-4 animate-spin" />
@@ -163,6 +190,9 @@ export default function App() {
       </header>
 
       <div className="mb-4 flex flex-wrap items-center gap-2">
+        {isDemo && (
+          <Badge className="border-primary/40 bg-primary/10 text-primary">Demo</Badge>
+        )}
         <Badge
           className={
             snap.subscription.ok

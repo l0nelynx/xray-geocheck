@@ -9,6 +9,8 @@ The container downloads pinned **xray-core** and **geocheck** binaries at startu
 
 TLS is not terminated here; put the service behind an external reverse proxy if you need HTTPS.
 
+Live UI demo (sample data, no live subscription): [https://l0nelynx.github.io/xray-geocheck/](https://l0nelynx.github.io/xray-geocheck/)
+
 ## Quick start
 
 ```bash
@@ -83,6 +85,41 @@ location = /geocheck {
 ```
 
 `UI_BASE_PATH=/geocheck`
+
+## Releases
+
+GitHub Actions **Release** is manual: Actions → Release → Run workflow → `tag` like `v1.2.3`.
+
+That job:
+
+- Pushes `ghcr.io/l0nelynx/xray-geocheck:<tag>` and `:latest` (linux/amd64 + linux/arm64)
+- Builds Go binaries for linux/windows/darwin (amd64 + arm64, plus windows amd64)
+- Creates a GitHub Release with those binaries and `SHA256SUMS`
+
+```bash
+docker pull ghcr.io/l0nelynx/xray-geocheck:v1.2.3
+```
+
+The package is private while this repository is private; `docker login ghcr.io` is required.
+
+Binaries on the release: `xray-geocheck_<tag>_<os>_<arch>` (`.exe` on Windows). The status page is embedded; xray-core and geocheck are still downloaded at startup from `deps.json`.
+
+If a git tag or GitHub Release with that version already exists, the workflow fails instead of overwriting.
+
+## Demo
+
+The GitHub Pages site is a static Vite build (`VITE_DEMO=true`) with a canned snapshot. Refresh buttons spin and leave the same sample rows.
+
+Local preview:
+
+```bash
+cd web
+npm ci
+npm run build:demo
+npm run preview
+```
+
+Pages deploys on every push to `main`. Repo Settings → Pages → Source must be **GitHub Actions**. GitHub Free does not publish Pages from a private repository.
 
 ## Grafana
 

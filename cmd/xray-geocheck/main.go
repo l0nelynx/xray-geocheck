@@ -18,8 +18,11 @@ import (
 	"xray-geocheck/internal/store"
 )
 
+var version = "dev"
+
 func main() {
 	slog.SetDefault(slog.New(slog.NewTextHandler(os.Stdout, &slog.HandlerOptions{Level: slog.LevelInfo})))
+	slog.Info("starting", "version", version)
 
 	cfg, err := config.Load()
 	if err != nil {

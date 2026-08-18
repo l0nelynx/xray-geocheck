@@ -1,0 +1,373 @@
+{
+  "subscription": {
+    "ok": true,
+    "hostCount": 4,
+    "fetchedAt": "2026-08-18T16:40:00.000Z",
+    "userAgent": "xray-geocheck (demo)"
+  },
+  "lastPingAt": "2026-08-18T17:15:00.000Z",
+  "lastGeoAt": "2026-08-18T16:55:00.000Z",
+  "geoRunning": false,
+  "pingRunning": false,
+  "refreshingAll": false,
+  "proxies": [
+    {
+      "id": "nl-vless-01",
+      "remarks": "NL-VLESS-01",
+      "address": "nl.example.net:443",
+      "protocol": "vless",
+      "socksAddr": "127.0.0.1:11001",
+      "ping": {
+        "up": true,
+        "rttMs": 28.4,
+        "status": 204,
+        "checkedAt": "2026-08-18T17:15:00.000Z"
+      },
+      "geo": {
+        "ok": true,
+        "checkedAt": "2026-08-18T16:50:00.000Z",
+        "report": {
+          "schema": 1,
+          "tool": "geocheck",
+          "timestamp": "2026-08-18T16:50:00.000Z",
+          "duration_ms": 18420,
+          "identity": {
+            "ipv4": "185.***.***.*12",
+            "asn": 60781,
+            "as_name": "LeaseWeb Netherlands B.V.",
+            "org": "LeaseWeb",
+            "as_country": "NL"
+          },
+          "transport": { "resolver": "1.1.1.1" },
+          "findings": [],
+          "reputation": {
+            "type": "residential",
+            "residential": true,
+            "risk": 12,
+            "confidence": 91,
+            "flags": ["residential"],
+            "proxy": false,
+            "vpn": false,
+            "tor": false,
+            "hosting": false,
+            "scraper": false,
+            "compromised": false,
+            "anonymous": false,
+            "provider": "ipinfo",
+            "range": "185.***.***.0/24",
+            "city": "Amsterdam",
+            "region": "North Holland",
+            "country": "Netherlands",
+            "country_code": "NL",
+            "devices_in_subnet": 14
+          },
+          "consensus": {
+            "ipv4": [
+              { "code": "nl", "country": "Netherlands", "count": 13, "total": 15, "percent": 87 },
+              { "code": "de", "country": "Germany", "count": 1, "total": 15, "percent": 7 },
+              { "code": "us", "country": "United States", "count": 1, "total": 15, "percent": 6 }
+            ]
+          },
+          "geo": {
+            "cdn": [
+              { "id": "cloudflare", "name": "Cloudflare", "ipv4": { "value": "NL", "country": "Netherlands" } },
+              { "id": "fastly", "name": "Fastly", "ipv4": { "value": "NL", "country": "Netherlands" } }
+            ],
+            "geoip": [
+              { "id": "ipinfo", "name": "IPinfo", "ipv4": { "value": "NL", "country": "Netherlands" } },
+              { "id": "maxmind", "name": "MaxMind", "ipv4": { "value": "NL", "country": "Netherlands" } },
+              { "id": "dbip", "name": "db-ip", "ipv4": { "value": "DE", "country": "Germany" } }
+            ],
+            "services": [
+              { "id": "youtube", "name": "YouTube", "ipv4": { "value": "NL", "country": "Netherlands" } },
+              { "id": "netflix", "name": "Netflix", "ipv4": { "value": "NL", "country": "Netherlands" } }
+            ]
+          },
+          "connectivity_checks": {
+            "clean": true,
+            "plain_http_blocked": false,
+            "ok": 4,
+            "captive_portal": 0,
+            "altered": 0,
+            "unreachable": 0,
+            "endpoints": [
+              { "id": "gstatic", "name": "gstatic generate_204", "verdict": "ok", "status": 204, "expected_status": 204, "rtt_ms": 26 },
+              { "id": "apple", "name": "Apple captive", "verdict": "ok", "status": 200, "expected_status": 200, "rtt_ms": 31 },
+              { "id": "msft", "name": "Microsoft NCSI", "verdict": "ok", "status": 200, "expected_status": 200, "rtt_ms": 29 },
+              { "id": "firefox", "name": "Firefox detectportal", "verdict": "ok", "status": 200, "expected_status": 200, "rtt_ms": 34 }
+            ]
+          },
+          "stash_checks": [
+            { "id": "youtube", "name": "YouTube", "state": "available", "region": "NL", "rtt_ms": 22 },
+            { "id": "netflix", "name": "Netflix", "state": "available", "region": "NL", "rtt_ms": 41 },
+            { "id": "discord", "name": "Discord", "state": "available", "region": "NL", "rtt_ms": 18 },
+            { "id": "telegram", "name": "Telegram", "state": "available", "region": "NL", "rtt_ms": 27 },
+            { "id": "instagram", "name": "Instagram", "state": "available", "region": "NL", "rtt_ms": 36 },
+            { "id": "spotify", "name": "Spotify", "state": "available", "region": "NL", "rtt_ms": 24 }
+          ],
+          "ai_endpoints": [
+            { "id": "openai", "name": "ChatGPT", "vendor": "OpenAI", "state": "available", "http_status": 200, "rtt_ms": 112 },
+            { "id": "anthropic", "name": "Claude", "vendor": "Anthropic", "state": "available", "http_status": 200, "rtt_ms": 148 },
+            { "id": "gemini", "name": "Gemini", "vendor": "Google", "state": "available", "http_status": 200, "rtt_ms": 97 }
+          ],
+          "connectivity": {
+            "icmp_available": false,
+            "privileged": false,
+            "score": 88,
+            "latency_floor_ms": 18,
+            "breakdown": { "http": 88 },
+            "targets": [
+              { "id": "cf", "name": "1.1.1.1", "verdict": "ok", "score": 90, "rtt_ms": 19, "excess_ms": 1, "loss": 0 },
+              { "id": "google", "name": "8.8.8.8", "verdict": "ok", "score": 86, "rtt_ms": 22, "excess_ms": 4, "loss": 0 }
+            ]
+          }
+        }
+      }
+    },
+    {
+      "id": "de-vless-02",
+      "remarks": "DE-VLESS-02",
+      "address": "de.example.net:443",
+      "protocol": "vless",
+      "socksAddr": "127.0.0.1:11002",
+      "ping": {
+        "up": true,
+        "rttMs": 41.2,
+        "status": 204,
+        "checkedAt": "2026-08-18T17:15:02.000Z"
+      },
+      "geo": {
+        "ok": true,
+        "checkedAt": "2026-08-18T16:52:00.000Z",
+        "report": {
+          "schema": 1,
+          "tool": "geocheck",
+          "timestamp": "2026-08-18T16:52:00.000Z",
+          "duration_ms": 20110,
+          "identity": {
+            "ipv4": "91.***.***.*44",
+            "asn": 24940,
+            "as_name": "Hetzner Online GmbH",
+            "org": "Hetzner",
+            "as_country": "DE"
+          },
+          "transport": { "resolver": "8.8.8.8" },
+          "findings": [{ "severity": "warn", "message": "Geo providers disagree on country (DE vs NL)." }],
+          "reputation": {
+            "type": "hosting",
+            "residential": false,
+            "risk": 38,
+            "confidence": 84,
+            "flags": ["hosting"],
+            "proxy": false,
+            "vpn": false,
+            "tor": false,
+            "hosting": true,
+            "scraper": false,
+            "compromised": false,
+            "anonymous": false,
+            "provider": "ipinfo",
+            "range": "91.***.***.0/24",
+            "city": "Falkenstein",
+            "region": "Saxony",
+            "country": "Germany",
+            "country_code": "DE",
+            "devices_in_subnet": 2
+          },
+          "consensus": {
+            "ipv4": [
+              { "code": "de", "country": "Germany", "count": 10, "total": 15, "percent": 67 },
+              { "code": "nl", "country": "Netherlands", "count": 4, "total": 15, "percent": 27 },
+              { "code": "us", "country": "United States", "count": 1, "total": 15, "percent": 6 }
+            ]
+          },
+          "geo": {
+            "cdn": [
+              { "id": "cloudflare", "name": "Cloudflare", "ipv4": { "value": "DE", "country": "Germany" } },
+              { "id": "fastly", "name": "Fastly", "ipv4": { "value": "NL", "country": "Netherlands" } }
+            ],
+            "geoip": [
+              { "id": "ipinfo", "name": "IPinfo", "ipv4": { "value": "DE", "country": "Germany" } },
+              { "id": "maxmind", "name": "MaxMind", "ipv4": { "value": "DE", "country": "Germany" } },
+              { "id": "dbip", "name": "db-ip", "ipv4": { "value": "NL", "country": "Netherlands" } }
+            ],
+            "services": [
+              { "id": "youtube", "name": "YouTube", "ipv4": { "value": "DE", "country": "Germany" } },
+              { "id": "netflix", "name": "Netflix", "ipv4": { "error": "blocked" } }
+            ]
+          },
+          "connectivity_checks": {
+            "clean": false,
+            "plain_http_blocked": false,
+            "ok": 3,
+            "captive_portal": 0,
+            "altered": 1,
+            "unreachable": 0,
+            "endpoints": [
+              { "id": "gstatic", "name": "gstatic generate_204", "verdict": "ok", "status": 204, "expected_status": 204, "rtt_ms": 39 },
+              { "id": "apple", "name": "Apple captive", "verdict": "altered", "status": 200, "expected_status": 200, "rtt_ms": 52 },
+              { "id": "msft", "name": "Microsoft NCSI", "verdict": "ok", "status": 200, "expected_status": 200, "rtt_ms": 44 },
+              { "id": "firefox", "name": "Firefox detectportal", "verdict": "ok", "status": 200, "expected_status": 200, "rtt_ms": 47 }
+            ]
+          },
+          "stash_checks": [
+            { "id": "youtube", "name": "YouTube", "state": "blocked", "region": "DE", "rtt_ms": 38, "detail": "HTTP 403" },
+            { "id": "netflix", "name": "Netflix", "state": "available", "region": "DE", "rtt_ms": 61 },
+            { "id": "discord", "name": "Discord", "state": "available", "region": "DE", "rtt_ms": 29 },
+            { "id": "telegram", "name": "Telegram", "state": "available", "region": "DE", "rtt_ms": 33 },
+            { "id": "instagram", "name": "Instagram", "state": "blocked", "region": "-", "detail": "connection reset" },
+            { "id": "spotify", "name": "Spotify", "state": "available", "region": "DE", "rtt_ms": 45 }
+          ],
+          "ai_endpoints": [
+            { "id": "openai", "name": "ChatGPT", "vendor": "OpenAI", "state": "available", "http_status": 200, "rtt_ms": 168 },
+            { "id": "anthropic", "name": "Claude", "vendor": "Anthropic", "state": "blocked", "http_status": 403, "detail": "region restricted" },
+            { "id": "gemini", "name": "Gemini", "vendor": "Google", "state": "available", "http_status": 200, "rtt_ms": 121 }
+          ],
+          "connectivity": {
+            "icmp_available": false,
+            "privileged": false,
+            "score": 71,
+            "latency_floor_ms": 29,
+            "breakdown": { "http": 71 },
+            "targets": [
+              { "id": "cf", "name": "1.1.1.1", "verdict": "ok", "score": 74, "rtt_ms": 31, "excess_ms": 2, "loss": 0 },
+              { "id": "google", "name": "8.8.8.8", "verdict": "degraded", "score": 68, "rtt_ms": 48, "excess_ms": 19, "loss": 0 }
+            ]
+          }
+        }
+      }
+    },
+    {
+      "id": "us-hy2-03",
+      "remarks": "US-HY2-03",
+      "address": "us.example.net:8443",
+      "protocol": "hysteria2",
+      "socksAddr": "127.0.0.1:11003",
+      "ping": {
+        "up": true,
+        "rttMs": 118.7,
+        "status": 204,
+        "checkedAt": "2026-08-18T17:15:04.000Z"
+      },
+      "geo": {
+        "ok": true,
+        "checkedAt": "2026-08-18T16:54:00.000Z",
+        "report": {
+          "schema": 1,
+          "tool": "geocheck",
+          "timestamp": "2026-08-18T16:54:00.000Z",
+          "duration_ms": 22340,
+          "identity": {
+            "ipv4": "104.***.***.*21",
+            "asn": 13335,
+            "as_name": "CLOUDFLARENET",
+            "org": "Cloudflare, Inc.",
+            "as_country": "US"
+          },
+          "transport": { "resolver": "1.1.1.1" },
+          "findings": [{ "severity": "warn", "message": "Exit IP looks like a hosting / CDN range." }],
+          "reputation": {
+            "type": "hosting",
+            "residential": false,
+            "risk": 78,
+            "confidence": 88,
+            "flags": ["hosting", "proxy"],
+            "proxy": true,
+            "vpn": false,
+            "tor": false,
+            "hosting": true,
+            "scraper": false,
+            "compromised": false,
+            "anonymous": false,
+            "provider": "ipinfo",
+            "range": "104.***.***.0/24",
+            "city": "Los Angeles",
+            "region": "California",
+            "country": "United States",
+            "country_code": "US",
+            "devices_in_subnet": 1
+          },
+          "consensus": {
+            "ipv4": [
+              { "code": "us", "country": "United States", "count": 12, "total": 15, "percent": 80 },
+              { "code": "ca", "country": "Canada", "count": 2, "total": 15, "percent": 13 },
+              { "code": "gb", "country": "United Kingdom", "count": 1, "total": 15, "percent": 7 }
+            ]
+          },
+          "geo": {
+            "cdn": [
+              { "id": "cloudflare", "name": "Cloudflare", "ipv4": { "value": "US", "country": "United States" } },
+              { "id": "fastly", "name": "Fastly", "ipv4": { "value": "US", "country": "United States" } }
+            ],
+            "geoip": [
+              { "id": "ipinfo", "name": "IPinfo", "ipv4": { "value": "US", "country": "United States" } },
+              { "id": "maxmind", "name": "MaxMind", "ipv4": { "value": "US", "country": "United States" } },
+              { "id": "dbip", "name": "db-ip", "ipv4": { "value": "US", "country": "United States" } }
+            ],
+            "services": [
+              { "id": "youtube", "name": "YouTube", "ipv4": { "value": "US", "country": "United States" } },
+              { "id": "netflix", "name": "Netflix", "ipv4": { "error": "blocked" } }
+            ]
+          },
+          "connectivity_checks": {
+            "clean": true,
+            "plain_http_blocked": false,
+            "ok": 4,
+            "captive_portal": 0,
+            "altered": 0,
+            "unreachable": 0,
+            "endpoints": [
+              { "id": "gstatic", "name": "gstatic generate_204", "verdict": "ok", "status": 204, "expected_status": 204, "rtt_ms": 109 },
+              { "id": "apple", "name": "Apple captive", "verdict": "ok", "status": 200, "expected_status": 200, "rtt_ms": 124 },
+              { "id": "msft", "name": "Microsoft NCSI", "verdict": "ok", "status": 200, "expected_status": 200, "rtt_ms": 118 },
+              { "id": "firefox", "name": "Firefox detectportal", "verdict": "ok", "status": 200, "expected_status": 200, "rtt_ms": 131 }
+            ]
+          },
+          "stash_checks": [
+            { "id": "youtube", "name": "YouTube", "state": "available", "region": "US", "rtt_ms": 98 },
+            { "id": "netflix", "name": "Netflix", "state": "blocked", "region": "US", "detail": "proxy detected" },
+            { "id": "discord", "name": "Discord", "state": "available", "region": "US", "rtt_ms": 87 },
+            { "id": "telegram", "name": "Telegram", "state": "available", "region": "US", "rtt_ms": 102 },
+            { "id": "instagram", "name": "Instagram", "state": "blocked", "region": "-", "detail": "checkpoint" },
+            { "id": "spotify", "name": "Spotify", "state": "available", "region": "US", "rtt_ms": 111 }
+          ],
+          "ai_endpoints": [
+            { "id": "openai", "name": "ChatGPT", "vendor": "OpenAI", "state": "available", "http_status": 200, "rtt_ms": 64 },
+            { "id": "anthropic", "name": "Claude", "vendor": "Anthropic", "state": "available", "http_status": 200, "rtt_ms": 71 },
+            { "id": "gemini", "name": "Gemini", "vendor": "Google", "state": "available", "http_status": 200, "rtt_ms": 58 }
+          ],
+          "connectivity": {
+            "icmp_available": false,
+            "privileged": false,
+            "score": 64,
+            "latency_floor_ms": 87,
+            "breakdown": { "http": 64 },
+            "targets": [
+              { "id": "cf", "name": "1.1.1.1", "verdict": "ok", "score": 70, "rtt_ms": 89, "excess_ms": 2, "loss": 0 },
+              { "id": "google", "name": "8.8.8.8", "verdict": "ok", "score": 58, "rtt_ms": 121, "excess_ms": 34, "loss": 0 }
+            ]
+          }
+        }
+      }
+    },
+    {
+      "id": "fi-vless-04",
+      "remarks": "FI-VLESS-04",
+      "address": "fi.example.net:443",
+      "protocol": "vless",
+      "socksAddr": "127.0.0.1:11004",
+      "ping": {
+        "up": false,
+        "rttMs": 0,
+        "status": 0,
+        "error": "dial tcp: i/o timeout",
+        "checkedAt": "2026-08-18T17:15:08.000Z"
+      },
+      "geo": {
+        "ok": false,
+        "error": "geocheck: socks handshake timeout",
+        "checkedAt": "2026-08-18T16:55:00.000Z"
+      }
+    }
+  ]
+}
