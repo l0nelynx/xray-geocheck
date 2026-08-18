@@ -41,8 +41,8 @@ func (a *API) Handler() http.Handler {
 	mux.HandleFunc("POST /api/refresh", a.refreshAll)
 	mux.HandleFunc("POST /api/refresh/proxy", a.refreshOne)
 	mux.HandleFunc("GET /metrics", a.metricsMoved)
-	mux.Handle("/", spaHandler())
-	return mux
+	mux.Handle("/", spaHandler(a.cfg.UIBaseHref()))
+	return withUIBase(a.cfg.UIBasePath, mux)
 }
 
 func (a *API) metricsMoved(w http.ResponseWriter, _ *http.Request) {
@@ -153,19 +153,78 @@ func redactSnapshot(snap model.Snapshot) model.Snapshot {
 	return snap
 }
 
-func spaHandler() http.Handler {
+func spaHandler(href string) http.Handler {
 	sub, err := fs.Sub(webui.Dist, "dist")
 	if err != nil {
 		return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
 			http.Error(w, "status page missing", http.StatusInternalServerError)
 		})
 	}
+	index, err := fs.ReadFile(sub, "index.html")
+	if err != nil {
+		return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+			http.Error(w, "status page missing", http.StatusInternalServerError)
+		})
+	}
+	index = injectBase(index, href)
 	fileServer := http.FileServer(http.FS(sub))
 	return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
-		if r.URL.Path != "/" && !strings.Contains(strings.TrimPrefix(r.URL.Path, "/"), ".") {
-			r = r.Clone(r.Context())
-			r.URL.Path = "/"
+		path := r.URL.Path
+		if path == "/" || path == "/index.html" || (path != "/" && !strings.Contains(strings.TrimPrefix(path, "/"), ".")) {
+			w.Header().Set("Content-Type", "text/html; charset=utf-8")
+			w.Header().Set("Cache-Control", "no-store")
+			_, _ = w.Write(index)
+			return
 		}
 		fileServer.ServeHTTP(w, r)
 	})
+}
+
+func withUIBase(base string, next http.Handler) http.Handler {
+	if base == "/" {
+		return next
+	}
+	strip := http.StripPrefix(base, next)
+	return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		p := r.URL.Path
+		if p == base {
+			http.Redirect(w, r, base+"/", http.StatusMovedPermanently)
+			return
+		}
+		if strings.HasPrefix(p, base+"/") {
+			strip.ServeHTTP(w, r)
+			return
+		}
+		next.ServeHTTP(w, r)
+	})
+}
+
+func injectBase(html []byte, href string) []byte {
+	tag := []byte(`<base href="` + href + `">`)
+	lower := strings.ToLower(string(html))
+	i := strings.Index(lower, "<head>")
+	if i < 0 {
+		i = strings.Index(lower, "<head ")
+		if i < 0 {
+			return append(tag, html...)
+		}
+		end := strings.Index(lower[i:], ">")
+		if end < 0 {
+			return append(tag, html...)
+		}
+		i += end + 1
+		out := make([]byte, 0, len(html)+len(tag)+1)
+		out = append(out, html[:i]...)
+		out = append(out, '\n')
+		out = append(out, tag...)
+		out = append(out, html[i:]...)
+		return out
+	}
+	i += len("<head>")
+	out := make([]byte, 0, len(html)+len(tag)+1)
+	out = append(out, html[:i]...)
+	out = append(out, '\n')
+	out = append(out, tag...)
+	out = append(out, html[i:]...)
+	return out
 }

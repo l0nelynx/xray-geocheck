@@ -37,6 +37,7 @@ Exit IPs in the JSON API and UI are masked (`104.28.193.121` → `104.***.***.*2
 | `GEO_CHECK_INTERVAL_MINUTES` | `720` | Full geocheck sweep |
 | `PING_CHECK_INTERVAL_MINUTES` | `5` | Ping sweep |
 | `LISTEN_ADDR` | `:8080` | Status page bind address inside the container |
+| `UI_BASE_PATH` | `/` | Public URL prefix. For nginx `location /geocheck/` set `/geocheck`. Assets and `/api/*` are served under this prefix. |
 | `METRICS_HOST` | `0.0.0.0` | Metrics listen address (separate HTTP server) |
 | `METRICS_PORT` | `3113` | Metrics listen port |
 | `METRICS_BASE_PATH` | `/metrics` | Prometheus scrape path on the metrics server. A leading slash is added if missing. `/` is rejected. |
@@ -57,3 +58,23 @@ Both Xray JSON arrays (`{ remarks, outbounds }`) and base64 share-link lists are
 `cap_add: [NET_RAW]` is set so geocheck can open a raw ICMP socket when the kernel allows it. Path traces through SOCKS5 are often empty; HTTP geolocation, reputation and access checks still run.
 
 Binaries are **not** baked into the image. They are fetched on every cold start into `BIN_DIR` (default `/opt/xray-geocheck/bin`).
+
+## Reverse proxy
+
+Set `UI_BASE_PATH` to the nginx location (no trailing slash). Example for `/geocheck/`:
+
+```nginx
+location /geocheck/ {
+    auth_basic "Private";
+    auth_basic_user_file /etc/nginx/.htpasswd;
+    proxy_hide_header WWW-Authenticate;
+    proxy_set_header Authorization "";
+    proxy_pass http://xray-geocheck/;
+    include /etc/nginx/conf.d/includes/proxy-params.conf;
+}
+location = /geocheck {
+    return 301 /geocheck/;
+}
+```
+
+`UI_BASE_PATH=/geocheck`

@@ -46,6 +46,23 @@ func TestMetricsListenAddr(t *testing.T) {
 	}
 }
 
+func TestUIBasePath(t *testing.T) {
+	t.Setenv("SUBSCRIPTION_URL", "https://example.test/sub")
+	t.Setenv("METRICS_USERNAME", "")
+	t.Setenv("METRICS_PASSWORD", "")
+	t.Setenv("UI_BASE_PATH", "geocheck/")
+	cfg, err := Load()
+	if err != nil {
+		t.Fatal(err)
+	}
+	if cfg.UIBasePath != "/geocheck" {
+		t.Fatalf("path %q", cfg.UIBasePath)
+	}
+	if cfg.UIBaseHref() != "/geocheck/" {
+		t.Fatalf("href %q", cfg.UIBaseHref())
+	}
+}
+
 func TestSubscriptionIntervalDefault(t *testing.T) {
 	t.Setenv("SUBSCRIPTION_URL", "https://example.test/sub")
 	t.Setenv("METRICS_USERNAME", "")

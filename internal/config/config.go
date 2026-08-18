@@ -35,6 +35,7 @@ type Config struct {
 	PingInterval    time.Duration
 	SubInterval     time.Duration
 	ListenAddr      string
+	UIBasePath      string
 	MetricsHost     string
 	MetricsPort     int
 	MetricsBasePath string
@@ -89,6 +90,7 @@ func Load() (*Config, error) {
 		PingInterval:    time.Duration(pingMin) * time.Minute,
 		SubInterval:     time.Duration(subMin) * time.Minute,
 		ListenAddr:      envOr("LISTEN_ADDR", DefaultListenAddr),
+		UIBasePath:      normalizeUIBase(os.Getenv("UI_BASE_PATH")),
 		MetricsHost:     envOr("METRICS_HOST", DefaultMetricsHost),
 		MetricsPort:     metricsPort,
 		MetricsBasePath: normalizePath(envOr("METRICS_BASE_PATH", DefaultMetricsBasePath)),
@@ -106,6 +108,13 @@ func Load() (*Config, error) {
 
 func (c *Config) MetricsAddr() string {
 	return net.JoinHostPort(c.MetricsHost, strconv.Itoa(c.MetricsPort))
+}
+
+func (c *Config) UIBaseHref() string {
+	if c.UIBasePath == "/" {
+		return "/"
+	}
+	return c.UIBasePath + "/"
 }
 
 func envOr(key, fallback string) string {
@@ -136,6 +145,17 @@ func osVersion() string {
 		}
 	}
 	return runtime.GOARCH
+}
+
+func normalizeUIBase(p string) string {
+	p = strings.TrimSpace(p)
+	if p == "" || p == "/" {
+		return "/"
+	}
+	if !strings.HasPrefix(p, "/") {
+		p = "/" + p
+	}
+	return strings.TrimRight(p, "/")
 }
 
 func normalizePath(p string) string {

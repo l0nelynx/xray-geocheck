@@ -8,6 +8,11 @@ export function cn(...inputs: ClassValue[]) {
 export const PROXY_GRID =
   "grid-cols-[minmax(240px,1.6fr)_100px_150px_minmax(220px,1.2fr)_80px_100px_110px_44px]";
 
+export function apiUrl(path: string) {
+  const rel = path.replace(/^\//, "");
+  return new URL(rel, document.baseURI).toString();
+}
+
 export function fmtMs(ms?: number | null) {
   if (ms == null || Number.isNaN(ms)) return "—";
   if (ms < 10) return `${ms.toFixed(1)} ms`;

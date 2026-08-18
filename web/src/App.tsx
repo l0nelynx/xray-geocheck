@@ -3,7 +3,7 @@ import { Activity, Eye, EyeOff, Globe2, Loader2, Radio, RefreshCw, Server } from
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { ProxyRow } from "@/components/ProxyRow";
-import { PROXY_GRID, fmtTime } from "@/lib/utils";
+import { PROXY_GRID, apiUrl, fmtTime } from "@/lib/utils";
 import { usePrivacy } from "@/lib/privacy";
 import type { Snapshot } from "@/lib/types";
 
@@ -27,7 +27,7 @@ export default function App() {
     let alive = true;
     const tick = async () => {
       try {
-        const res = await fetch("/api/status");
+        const res = await fetch(apiUrl("api/status"));
         if (!res.ok) throw new Error(`status ${res.status}`);
         const data = (await res.json()) as Snapshot;
         if (alive) {
@@ -72,7 +72,7 @@ export default function App() {
   async function refreshAll() {
     setPendingAll(true);
     try {
-      const res = await fetch("/api/refresh", { method: "POST" });
+      const res = await fetch(apiUrl("api/refresh"), { method: "POST" });
       if (!res.ok) throw new Error(`refresh ${res.status}`);
     } catch (e) {
       setPendingAll(false);
@@ -83,7 +83,7 @@ export default function App() {
   async function refreshOne(id: string) {
     setPendingIds((prev) => new Set(prev).add(id));
     try {
-      const res = await fetch("/api/refresh/proxy", {
+      const res = await fetch(apiUrl("api/refresh/proxy"), {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ id }),

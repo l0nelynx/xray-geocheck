@@ -51,7 +51,7 @@ func main() {
 		ReadHeaderTimeout: 10 * time.Second,
 	}
 	go func() {
-		slog.Info("http listening", "addr", cfg.ListenAddr)
+		slog.Info("http listening", "addr", cfg.ListenAddr, "ui_base", cfg.UIBasePath)
 		if err := srv.ListenAndServe(); err != nil && err != http.ErrServerClosed {
 			slog.Error("http server", "err", err)
 			stop()
