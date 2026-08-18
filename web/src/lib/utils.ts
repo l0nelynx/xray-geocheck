@@ -38,7 +38,7 @@ export function statusTone(value?: string | null): StatusTone {
   const v = (value || "").trim().toLowerCase();
   if (!v) return "neutral";
   if (["available", "ok", "clean", "reachable", "up"].includes(v)) return "ok";
-  if (["blocked", "captive", "altered", "captive_portal", "degraded"].includes(v)) return "warn";
+  if (["blocked", "captive", "altered", "captive_portal", "degraded", "restricted"].includes(v)) return "warn";
   if (["error", "unreachable", "fail", "failed", "timeout", "down"].includes(v)) return "err";
   return "neutral";
 }

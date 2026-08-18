@@ -98,17 +98,24 @@
             ]
           },
           "stash_checks": [
-            { "id": "youtube", "name": "YouTube", "state": "available", "region": "NL", "rtt_ms": 22 },
-            { "id": "netflix", "name": "Netflix", "state": "available", "region": "NL", "rtt_ms": 41 },
-            { "id": "discord", "name": "Discord", "state": "available", "region": "NL", "rtt_ms": 18 },
-            { "id": "telegram", "name": "Telegram", "state": "available", "region": "NL", "rtt_ms": 27 },
-            { "id": "instagram", "name": "Instagram", "state": "available", "region": "NL", "rtt_ms": 36 },
-            { "id": "spotify", "name": "Spotify", "state": "available", "region": "NL", "rtt_ms": 24 }
+            { "id": "chatgpt_web", "name": "ChatGPT (web)", "state": "available", "rtt_ms": 89 },
+            { "id": "chatgpt_app", "name": "ChatGPT (app)", "state": "available", "rtt_ms": 94 },
+            { "id": "youtube_premium_access", "name": "YouTube Premium", "state": "available", "rtt_ms": 38 },
+            { "id": "netflix_access", "name": "Netflix", "state": "available", "region": "NL", "detail": "full catalogue", "rtt_ms": 52 },
+            { "id": "claude_access", "name": "Claude", "state": "available", "region": "NL", "rtt_ms": 71 },
+            { "id": "tiktok_access", "name": "TikTok", "state": "available", "rtt_ms": 44 },
+            { "id": "gemini_access", "name": "Gemini", "state": "available", "region": "NLD", "rtt_ms": 41 },
+            { "id": "notebooklm_access", "name": "NotebookLM", "state": "available", "detail": "sign-in required", "rtt_ms": 48 }
           ],
           "ai_endpoints": [
-            { "id": "openai", "name": "ChatGPT", "vendor": "OpenAI", "state": "available", "http_status": 200, "rtt_ms": 112 },
-            { "id": "anthropic", "name": "Claude", "vendor": "Anthropic", "state": "available", "http_status": 200, "rtt_ms": 148 },
-            { "id": "gemini", "name": "Gemini", "vendor": "Google", "state": "available", "http_status": 200, "rtt_ms": 97 }
+            { "id": "openai", "name": "OpenAI", "vendor": "OpenAI", "state": "reachable", "http_status": 401, "detail": "answered, credentials not supplied", "rtt_ms": 112 },
+            { "id": "anthropic", "name": "Anthropic", "vendor": "Anthropic", "state": "reachable", "http_status": 401, "detail": "answered, credentials not supplied", "rtt_ms": 148 },
+            { "id": "gemini", "name": "Google Gemini", "vendor": "Google", "state": "reachable", "http_status": 403, "detail": "answered, credentials not supplied", "rtt_ms": 97 },
+            { "id": "deepseek", "name": "DeepSeek", "vendor": "DeepSeek", "state": "reachable", "http_status": 401, "rtt_ms": 186 },
+            { "id": "qwen_intl", "name": "Qwen (Singapore)", "vendor": "Alibaba", "state": "reachable", "http_status": 401, "rtt_ms": 201 },
+            { "id": "qwen_cn", "name": "Qwen (Beijing)", "vendor": "Alibaba", "state": "reachable", "http_status": 401, "rtt_ms": 244 },
+            { "id": "moonshot", "name": "Kimi / Moonshot", "vendor": "Moonshot", "state": "reachable", "http_status": 401, "rtt_ms": 231 },
+            { "id": "zhipu", "name": "Zhipu GLM", "vendor": "Zhipu", "state": "reachable", "http_status": 401, "rtt_ms": 218 }
           ],
           "connectivity": {
             "icmp_available": false,
@@ -211,17 +218,24 @@
             ]
           },
           "stash_checks": [
-            { "id": "youtube", "name": "YouTube", "state": "blocked", "region": "DE", "rtt_ms": 38, "detail": "HTTP 403" },
-            { "id": "netflix", "name": "Netflix", "state": "available", "region": "DE", "rtt_ms": 61 },
-            { "id": "discord", "name": "Discord", "state": "available", "region": "DE", "rtt_ms": 29 },
-            { "id": "telegram", "name": "Telegram", "state": "available", "region": "DE", "rtt_ms": 33 },
-            { "id": "instagram", "name": "Instagram", "state": "blocked", "region": "-", "detail": "connection reset" },
-            { "id": "spotify", "name": "Spotify", "state": "available", "region": "DE", "rtt_ms": 45 }
+            { "id": "chatgpt_web", "name": "ChatGPT (web)", "state": "available", "rtt_ms": 102 },
+            { "id": "chatgpt_app", "name": "ChatGPT (app)", "state": "blocked", "detail": "disallowed ISP; the exit address is classed as hosting or proxy space" },
+            { "id": "youtube_premium_access", "name": "YouTube Premium", "state": "available", "rtt_ms": 46 },
+            { "id": "netflix_access", "name": "Netflix", "state": "restricted", "region": "DE", "detail": "originals only; licensed titles are withheld", "rtt_ms": 61 },
+            { "id": "claude_access", "name": "Claude", "state": "available", "region": "DE", "rtt_ms": 88 },
+            { "id": "tiktok_access", "name": "TikTok", "state": "available", "rtt_ms": 51 },
+            { "id": "gemini_access", "name": "Gemini", "state": "available", "region": "DEU", "rtt_ms": 49 },
+            { "id": "notebooklm_access", "name": "NotebookLM", "state": "available", "detail": "sign-in required", "rtt_ms": 55 }
           ],
           "ai_endpoints": [
-            { "id": "openai", "name": "ChatGPT", "vendor": "OpenAI", "state": "available", "http_status": 200, "rtt_ms": 168 },
-            { "id": "anthropic", "name": "Claude", "vendor": "Anthropic", "state": "blocked", "http_status": 403, "detail": "region restricted" },
-            { "id": "gemini", "name": "Gemini", "vendor": "Google", "state": "available", "http_status": 200, "rtt_ms": 121 }
+            { "id": "openai", "name": "OpenAI", "vendor": "OpenAI", "state": "reachable", "http_status": 401, "detail": "answered, credentials not supplied", "rtt_ms": 168 },
+            { "id": "anthropic", "name": "Anthropic", "vendor": "Anthropic", "state": "blocked", "http_status": 403, "detail": "the API refused this region" },
+            { "id": "gemini", "name": "Google Gemini", "vendor": "Google", "state": "reachable", "http_status": 403, "rtt_ms": 121 },
+            { "id": "deepseek", "name": "DeepSeek", "vendor": "DeepSeek", "state": "reachable", "http_status": 401, "rtt_ms": 194 },
+            { "id": "qwen_intl", "name": "Qwen (Singapore)", "vendor": "Alibaba", "state": "reachable", "http_status": 401, "rtt_ms": 211 },
+            { "id": "qwen_cn", "name": "Qwen (Beijing)", "vendor": "Alibaba", "state": "reachable", "http_status": 401, "rtt_ms": 258 },
+            { "id": "moonshot", "name": "Kimi / Moonshot", "vendor": "Moonshot", "state": "reachable", "http_status": 401, "rtt_ms": 240 },
+            { "id": "zhipu", "name": "Zhipu GLM", "vendor": "Zhipu", "state": "reachable", "http_status": 401, "rtt_ms": 227 }
           ],
           "connectivity": {
             "icmp_available": false,
@@ -324,17 +338,24 @@
             ]
           },
           "stash_checks": [
-            { "id": "youtube", "name": "YouTube", "state": "available", "region": "US", "rtt_ms": 98 },
-            { "id": "netflix", "name": "Netflix", "state": "blocked", "region": "US", "detail": "proxy detected" },
-            { "id": "discord", "name": "Discord", "state": "available", "region": "US", "rtt_ms": 87 },
-            { "id": "telegram", "name": "Telegram", "state": "available", "region": "US", "rtt_ms": 102 },
-            { "id": "instagram", "name": "Instagram", "state": "blocked", "region": "-", "detail": "checkpoint" },
-            { "id": "spotify", "name": "Spotify", "state": "available", "region": "US", "rtt_ms": 111 }
+            { "id": "chatgpt_web", "name": "ChatGPT (web)", "state": "available", "rtt_ms": 76 },
+            { "id": "chatgpt_app", "name": "ChatGPT (app)", "state": "blocked", "detail": "disallowed ISP; the exit address is classed as hosting or proxy space" },
+            { "id": "youtube_premium_access", "name": "YouTube Premium", "state": "available", "rtt_ms": 91 },
+            { "id": "netflix_access", "name": "Netflix", "state": "restricted", "region": "US", "detail": "originals only; licensed titles are withheld", "rtt_ms": 108 },
+            { "id": "claude_access", "name": "Claude", "state": "available", "region": "US", "rtt_ms": 64 },
+            { "id": "tiktok_access", "name": "TikTok", "state": "available", "rtt_ms": 99 },
+            { "id": "gemini_access", "name": "Gemini", "state": "available", "region": "USA", "rtt_ms": 58 },
+            { "id": "notebooklm_access", "name": "NotebookLM", "state": "available", "detail": "sign-in required", "rtt_ms": 62 }
           ],
           "ai_endpoints": [
-            { "id": "openai", "name": "ChatGPT", "vendor": "OpenAI", "state": "available", "http_status": 200, "rtt_ms": 64 },
-            { "id": "anthropic", "name": "Claude", "vendor": "Anthropic", "state": "available", "http_status": 200, "rtt_ms": 71 },
-            { "id": "gemini", "name": "Gemini", "vendor": "Google", "state": "available", "http_status": 200, "rtt_ms": 58 }
+            { "id": "openai", "name": "OpenAI", "vendor": "OpenAI", "state": "reachable", "http_status": 401, "detail": "answered, credentials not supplied", "rtt_ms": 64 },
+            { "id": "anthropic", "name": "Anthropic", "vendor": "Anthropic", "state": "reachable", "http_status": 401, "detail": "answered, credentials not supplied", "rtt_ms": 71 },
+            { "id": "gemini", "name": "Google Gemini", "vendor": "Google", "state": "reachable", "http_status": 403, "rtt_ms": 58 },
+            { "id": "deepseek", "name": "DeepSeek", "vendor": "DeepSeek", "state": "reachable", "http_status": 401, "rtt_ms": 178 },
+            { "id": "qwen_intl", "name": "Qwen (Singapore)", "vendor": "Alibaba", "state": "reachable", "http_status": 401, "rtt_ms": 189 },
+            { "id": "qwen_cn", "name": "Qwen (Beijing)", "vendor": "Alibaba", "state": "reachable", "http_status": 401, "rtt_ms": 221 },
+            { "id": "moonshot", "name": "Kimi / Moonshot", "vendor": "Moonshot", "state": "reachable", "http_status": 401, "rtt_ms": 214 },
+            { "id": "zhipu", "name": "Zhipu GLM", "vendor": "Zhipu", "state": "reachable", "http_status": 401, "rtt_ms": 206 }
           ],
           "connectivity": {
             "icmp_available": false,
