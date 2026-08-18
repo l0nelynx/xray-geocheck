@@ -9,11 +9,11 @@
     }
   },
   "geocheck": {
-    "version": "v0.2.4",
+    "version": "v0.3.0",
     "assets": {
-      "linux_amd64": "https://github.com/remnawave/geocheck/releases/download/v0.2.4/geocheck_0.2.4_linux_amd64.tar.gz",
-      "linux_arm64": "https://github.com/remnawave/geocheck/releases/download/v0.2.4/geocheck_0.2.4_linux_arm64.tar.gz",
-      "darwin": "https://github.com/remnawave/geocheck/releases/download/v0.2.4/geocheck_0.2.4_darwin_all.tar.gz"
+      "linux_amd64": "https://github.com/remnawave/geocheck/releases/download/v0.3.0/geocheck_linux_amd64.tar.gz",
+      "linux_arm64": "https://github.com/remnawave/geocheck/releases/download/v0.3.0/geocheck_0.3.0_linux_arm64.tar.gz",
+      "darwin": "https://github.com/remnawave/geocheck/releases/download/v0.3.0/geocheck_0.3.0_darwin_all.tar.gz"
     }
   }
 }
