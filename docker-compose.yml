@@ -3,7 +3,7 @@ services:
     build: .
     container_name: xray-geocheck
     ports:
-      - "8080:8080"
+#      - "8080:8080"
       - "3113:3113"
     cap_add:
       - NET_RAW
