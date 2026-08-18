@@ -78,3 +78,16 @@ location = /geocheck {
 ```
 
 `UI_BASE_PATH=/geocheck`
+
+## Grafana
+
+Import [`grafana/dashboard.json`](grafana/dashboard.json) (Dashboards → New → Import). Pick your Prometheus datasource. Filter by proxy at the top.
+
+Scrape example:
+
+```yaml
+- job_name: xray-geocheck
+  scrape_interval: 30s
+  static_configs:
+    - targets: ["xray-geocheck:3113"]
+```

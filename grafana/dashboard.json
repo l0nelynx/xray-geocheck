@@ -1,0 +1,771 @@
+{
+  "annotations": { "list": [] },
+  "editable": true,
+  "fiscalYearStartMonth": 0,
+  "graphTooltip": 1,
+  "id": null,
+  "links": [],
+  "liveNow": false,
+  "panels": [
+    {
+      "id": 1,
+      "type": "stat",
+      "title": "Proxies up",
+      "gridPos": { "h": 4, "w": 4, "x": 0, "y": 0 },
+      "datasource": { "type": "prometheus", "uid": "${datasource}" },
+      "fieldConfig": {
+        "defaults": {
+          "color": { "mode": "thresholds" },
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              { "color": "red", "value": null },
+              { "color": "green", "value": 1 }
+            ]
+          },
+          "unit": "short"
+        },
+        "overrides": []
+      },
+      "options": {
+        "colorMode": "background",
+        "graphMode": "none",
+        "justifyMode": "center",
+        "reduceOptions": { "calcs": ["lastNotNull"], "fields": "", "values": false },
+        "textMode": "value"
+      },
+      "targets": [
+        {
+          "expr": "sum(xray_geocheck_proxy_up{proxy=~\"$proxy\"})",
+          "legendFormat": "up",
+          "refId": "A",
+          "instant": true
+        }
+      ]
+    },
+    {
+      "id": 2,
+      "type": "stat",
+      "title": "Proxies down",
+      "gridPos": { "h": 4, "w": 4, "x": 4, "y": 0 },
+      "datasource": { "type": "prometheus", "uid": "${datasource}" },
+      "fieldConfig": {
+        "defaults": {
+          "color": { "mode": "thresholds" },
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              { "color": "green", "value": null },
+              { "color": "red", "value": 1 }
+            ]
+          },
+          "unit": "short"
+        },
+        "overrides": []
+      },
+      "options": {
+        "colorMode": "background",
+        "graphMode": "none",
+        "justifyMode": "center",
+        "reduceOptions": { "calcs": ["lastNotNull"], "fields": "", "values": false },
+        "textMode": "value"
+      },
+      "targets": [
+        {
+          "expr": "count(xray_geocheck_proxy_up{proxy=~\"$proxy\"} == 0) or vector(0)",
+          "legendFormat": "down",
+          "refId": "A",
+          "instant": true
+        }
+      ]
+    },
+    {
+      "id": 3,
+      "type": "stat",
+      "title": "Tracked proxies",
+      "gridPos": { "h": 4, "w": 4, "x": 8, "y": 0 },
+      "datasource": { "type": "prometheus", "uid": "${datasource}" },
+      "fieldConfig": {
+        "defaults": { "color": { "fixedColor": "blue", "mode": "fixed" }, "unit": "short" },
+        "overrides": []
+      },
+      "options": {
+        "colorMode": "value",
+        "graphMode": "none",
+        "justifyMode": "center",
+        "reduceOptions": { "calcs": ["lastNotNull"], "fields": "", "values": false },
+        "textMode": "value"
+      },
+      "targets": [
+        {
+          "expr": "count(xray_geocheck_proxy_up{proxy=~\"$proxy\"})",
+          "legendFormat": "n",
+          "refId": "A",
+          "instant": true
+        }
+      ]
+    },
+    {
+      "id": 4,
+      "type": "stat",
+      "title": "Last ping age",
+      "gridPos": { "h": 4, "w": 6, "x": 12, "y": 0 },
+      "datasource": { "type": "prometheus", "uid": "${datasource}" },
+      "fieldConfig": {
+        "defaults": {
+          "color": { "mode": "thresholds" },
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              { "color": "green", "value": null },
+              { "color": "yellow", "value": 600 },
+              { "color": "red", "value": 1800 }
+            ]
+          },
+          "unit": "s"
+        },
+        "overrides": []
+      },
+      "options": {
+        "colorMode": "value",
+        "graphMode": "none",
+        "justifyMode": "center",
+        "reduceOptions": { "calcs": ["lastNotNull"], "fields": "", "values": false },
+        "textMode": "value"
+      },
+      "targets": [
+        {
+          "expr": "time() - xray_geocheck_last_success_timestamp{check=\"ping\"}",
+          "legendFormat": "ping",
+          "refId": "A",
+          "instant": true
+        }
+      ]
+    },
+    {
+      "id": 5,
+      "type": "stat",
+      "title": "Last geocheck age",
+      "gridPos": { "h": 4, "w": 6, "x": 18, "y": 0 },
+      "datasource": { "type": "prometheus", "uid": "${datasource}" },
+      "fieldConfig": {
+        "defaults": {
+          "color": { "mode": "thresholds" },
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              { "color": "green", "value": null },
+              { "color": "yellow", "value": 43200 },
+              { "color": "red", "value": 86400 }
+            ]
+          },
+          "unit": "s"
+        },
+        "overrides": []
+      },
+      "options": {
+        "colorMode": "value",
+        "graphMode": "none",
+        "justifyMode": "center",
+        "reduceOptions": { "calcs": ["lastNotNull"], "fields": "", "values": false },
+        "textMode": "value"
+      },
+      "targets": [
+        {
+          "expr": "time() - xray_geocheck_last_success_timestamp{check=\"geo\"}",
+          "legendFormat": "geo",
+          "refId": "A",
+          "instant": true
+        }
+      ]
+    },
+    {
+      "id": 6,
+      "type": "table",
+      "title": "Access",
+      "gridPos": { "h": 12, "w": 24, "x": 0, "y": 4 },
+      "datasource": { "type": "prometheus", "uid": "${datasource}" },
+      "fieldConfig": {
+        "defaults": { "custom": { "align": "auto", "filterable": true } },
+        "overrides": [
+          {
+            "matcher": { "id": "byName", "options": "State" },
+            "properties": [
+              {
+                "id": "mappings",
+                "value": [
+                  {
+                    "type": "value",
+                    "options": {
+                      "available": { "color": "green", "index": 0, "text": "available" },
+                      "ok": { "color": "green", "index": 1, "text": "ok" },
+                      "blocked": { "color": "orange", "index": 2, "text": "blocked" },
+                      "captive": { "color": "orange", "index": 3, "text": "captive" },
+                      "degraded": { "color": "orange", "index": 4, "text": "degraded" },
+                      "error": { "color": "red", "index": 5, "text": "error" },
+                      "unreachable": { "color": "red", "index": 6, "text": "unreachable" },
+                      "timeout": { "color": "red", "index": 7, "text": "timeout" },
+                      "unknown": { "color": "text", "index": 8, "text": "unknown" }
+                    }
+                  }
+                ]
+              },
+              { "id": "custom.cellOptions", "value": { "type": "color-background" } }
+            ]
+          }
+        ]
+      },
+      "options": { "cellHeight": "sm", "footer": { "show": false }, "showHeader": true },
+      "transformations": [
+        {
+          "id": "organize",
+          "options": {
+            "excludeByName": { "Time": true, "__name__": true, "Value": true },
+            "indexByName": { "proxy": 0, "service": 1, "state": 2, "region": 3 },
+            "renameByName": {
+              "proxy": "Proxy",
+              "service": "Service",
+              "state": "State",
+              "region": "Region"
+            }
+          }
+        },
+        {
+          "id": "sortBy",
+          "options": {
+            "fields": {},
+            "sort": [{ "field": "Proxy", "desc": false }]
+          }
+        }
+      ],
+      "targets": [
+        {
+          "expr": "xray_geocheck_stash_info{proxy=~\"$proxy\"}",
+          "format": "table",
+          "instant": true,
+          "legendFormat": "",
+          "refId": "A"
+        }
+      ]
+    },
+    {
+      "id": 7,
+      "type": "table",
+      "title": "Proxy overview",
+      "gridPos": { "h": 10, "w": 24, "x": 0, "y": 16 },
+      "datasource": { "type": "prometheus", "uid": "${datasource}" },
+      "fieldConfig": {
+        "defaults": {
+          "custom": { "align": "auto", "filterable": true },
+          "mappings": []
+        },
+        "overrides": [
+          {
+            "matcher": { "id": "byName", "options": "Up" },
+            "properties": [
+              {
+                "id": "mappings",
+                "value": [
+                  { "type": "value", "options": { "0": { "color": "red", "index": 0, "text": "down" }, "1": { "color": "green", "index": 1, "text": "up" } } }
+                ]
+              },
+              { "id": "custom.cellOptions", "value": { "type": "color-background" } }
+            ]
+          },
+          {
+            "matcher": { "id": "byName", "options": "RTT ms" },
+            "properties": [
+              { "id": "unit", "value": "ms" },
+              { "id": "decimals", "value": 0 }
+            ]
+          },
+          {
+            "matcher": { "id": "byName", "options": "Risk" },
+            "properties": [
+              {
+                "id": "thresholds",
+                "value": {
+                  "mode": "absolute",
+                  "steps": [
+                    { "color": "green", "value": null },
+                    { "color": "yellow", "value": 40 },
+                    { "color": "red", "value": 70 }
+                  ]
+                }
+              },
+              { "id": "custom.cellOptions", "value": { "type": "color-background" } },
+              { "id": "color", "value": { "mode": "thresholds" } }
+            ]
+          }
+        ]
+      },
+      "options": { "cellHeight": "sm", "footer": { "show": false }, "showHeader": true },
+      "transformations": [
+        {
+          "id": "organize",
+          "options": {
+            "excludeByName": { "Time": true, "__name__": true }
+          }
+        },
+        {
+          "id": "joinByField",
+          "options": {
+            "byField": "proxy",
+            "mode": "outer"
+          }
+        },
+        {
+          "id": "organize",
+          "options": {
+            "excludeByName": { "Value #E": true, "Value 4": true },
+            "indexByName": {
+              "proxy": 0,
+              "Value #A": 1,
+              "Value": 1,
+              "Value #B": 2,
+              "Value 1": 2,
+              "Value #C": 3,
+              "Value 2": 3,
+              "Value #D": 4,
+              "Value 3": 4,
+              "tags": 5
+            },
+            "renameByName": {
+              "proxy": "Proxy",
+              "Value #A": "Up",
+              "Value": "Up",
+              "Value #B": "RTT ms",
+              "Value 1": "RTT ms",
+              "Value #C": "Risk",
+              "Value 2": "Risk",
+              "Value #D": "Path score",
+              "Value 3": "Path score",
+              "tags": "Flags"
+            }
+          }
+        }
+      ],
+      "targets": [
+        {
+          "expr": "max by (proxy) (xray_geocheck_proxy_up{proxy=~\"$proxy\"})",
+          "format": "table",
+          "instant": true,
+          "legendFormat": "",
+          "refId": "A"
+        },
+        {
+          "expr": "max by (proxy) (xray_geocheck_ping_rtt_ms{proxy=~\"$proxy\"})",
+          "format": "table",
+          "instant": true,
+          "legendFormat": "",
+          "refId": "B"
+        },
+        {
+          "expr": "max by (proxy) (xray_geocheck_reputation_risk{proxy=~\"$proxy\"})",
+          "format": "table",
+          "instant": true,
+          "legendFormat": "",
+          "refId": "C"
+        },
+        {
+          "expr": "max by (proxy) (xray_geocheck_connectivity_score{proxy=~\"$proxy\"})",
+          "format": "table",
+          "instant": true,
+          "legendFormat": "",
+          "refId": "D"
+        },
+        {
+          "expr": "max by (proxy, tags) (xray_geocheck_reputation_tags{proxy=~\"$proxy\"})",
+          "format": "table",
+          "instant": true,
+          "legendFormat": "",
+          "refId": "E"
+        }
+      ]
+    },
+    {
+      "id": 8,
+      "type": "timeseries",
+      "title": "Ping RTT (ms)",
+      "gridPos": { "h": 9, "w": 16, "x": 0, "y": 26 },
+      "datasource": { "type": "prometheus", "uid": "${datasource}" },
+      "fieldConfig": {
+        "defaults": {
+          "color": { "mode": "palette-classic" },
+          "custom": {
+            "drawStyle": "line",
+            "fillOpacity": 8,
+            "lineWidth": 1,
+            "pointSize": 5,
+            "showPoints": "auto",
+            "spanNulls": false
+          },
+          "unit": "ms"
+        },
+        "overrides": []
+      },
+      "options": {
+        "legend": { "calcs": ["mean", "max"], "displayMode": "table", "placement": "right" },
+        "tooltip": { "mode": "multi", "sort": "desc" }
+      },
+      "targets": [
+        {
+          "expr": "xray_geocheck_ping_rtt_ms{proxy=~\"$proxy\"}",
+          "legendFormat": "{{proxy}}",
+          "refId": "A"
+        }
+      ]
+    },
+    {
+      "id": 9,
+      "type": "state-timeline",
+      "title": "Proxy up / down",
+      "gridPos": { "h": 9, "w": 8, "x": 16, "y": 26 },
+      "datasource": { "type": "prometheus", "uid": "${datasource}" },
+      "fieldConfig": {
+        "defaults": {
+          "color": { "mode": "thresholds" },
+          "custom": { "fillOpacity": 70, "lineWidth": 0 },
+          "mappings": [
+            { "options": { "0": { "color": "red", "index": 0, "text": "down" }, "1": { "color": "green", "index": 1, "text": "up" } }, "type": "value" }
+          ],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              { "color": "red", "value": null },
+              { "color": "green", "value": 1 }
+            ]
+          }
+        },
+        "overrides": []
+      },
+      "options": { "alignValue": "left", "legend": { "displayMode": "list", "placement": "bottom" }, "mergeValues": true, "rowHeight": 0.8, "showValue": "never" },
+      "targets": [
+        {
+          "expr": "xray_geocheck_proxy_up{proxy=~\"$proxy\"}",
+          "legendFormat": "{{proxy}}",
+          "refId": "A"
+        }
+      ]
+    },
+    {
+      "id": 10,
+      "type": "barchart",
+      "title": "Geolocation consensus",
+      "gridPos": { "h": 12, "w": 24, "x": 0, "y": 35 },
+      "datasource": { "type": "prometheus", "uid": "${datasource}" },
+      "fieldConfig": {
+        "defaults": {
+          "color": { "mode": "palette-classic" },
+          "custom": {
+            "axisBorderShow": false,
+            "axisCenteredZero": false,
+            "axisColorMode": "text",
+            "axisLabel": "",
+            "axisPlacement": "auto",
+            "fillOpacity": 90,
+            "gradientMode": "none",
+            "lineWidth": 0,
+            "scaleDistribution": { "type": "linear" }
+          },
+          "decimals": 0,
+          "max": 100,
+          "min": 0,
+          "unit": "percent"
+        },
+        "overrides": []
+      },
+      "options": {
+        "barRadius": 0,
+        "barWidth": 0.85,
+        "fullHighlight": true,
+        "groupWidth": 0.8,
+        "legend": { "calcs": [], "displayMode": "list", "placement": "right", "showLegend": true },
+        "orientation": "horizontal",
+        "showValue": "auto",
+        "stacking": "normal",
+        "tooltip": { "mode": "multi", "sort": "desc" },
+        "xTickLabelMaxLength": 48,
+        "xTickLabelRotation": 0,
+        "xTickLabelSpacing": 0
+      },
+      "transformations": [
+        {
+          "id": "organize",
+          "options": {
+            "excludeByName": { "Time": true, "__name__": true, "ip_version": true }
+          }
+        },
+        {
+          "id": "groupingToMatrix",
+          "options": {
+            "columnField": "code",
+            "emptyValue": "0",
+            "rowField": "proxy",
+            "valueField": "Value"
+          }
+        },
+        {
+          "id": "organize",
+          "options": {
+            "renameByName": {
+              "proxy\\code": "Proxy"
+            }
+          }
+        }
+      ],
+      "targets": [
+        {
+          "expr": "max by (proxy, code) (xray_geocheck_consensus_percent{proxy=~\"$proxy\",ip_version=\"$ip_version\"})",
+          "format": "table",
+          "instant": true,
+          "legendFormat": "",
+          "refId": "A"
+        }
+      ]
+    },
+    {
+      "id": 11,
+      "type": "row",
+      "title": "Reputation",
+      "gridPos": { "h": 1, "w": 24, "x": 0, "y": 47 },
+      "collapsed": false,
+      "panels": []
+    },
+    {
+      "id": 12,
+      "type": "bargauge",
+      "title": "Exit IP reputation risk",
+      "gridPos": { "h": 10, "w": 12, "x": 0, "y": 48 },
+      "datasource": { "type": "prometheus", "uid": "${datasource}" },
+      "fieldConfig": {
+        "defaults": {
+          "color": { "mode": "thresholds" },
+          "max": 100,
+          "min": 0,
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              { "color": "green", "value": null },
+              { "color": "yellow", "value": 40 },
+              { "color": "red", "value": 70 }
+            ]
+          }
+        },
+        "overrides": []
+      },
+      "options": {
+        "displayMode": "gradient",
+        "maxVizHeight": 32,
+        "minVizHeight": 16,
+        "namePlacement": "left",
+        "orientation": "horizontal",
+        "reduceOptions": { "calcs": ["lastNotNull"], "fields": "", "values": false },
+        "showUnfilled": true,
+        "valueMode": "color"
+      },
+      "targets": [
+        {
+          "expr": "xray_geocheck_reputation_risk{proxy=~\"$proxy\"}",
+          "legendFormat": "{{proxy}}",
+          "refId": "A",
+          "instant": true
+        }
+      ]
+    },
+    {
+      "id": 13,
+      "type": "bargauge",
+      "title": "Reputation flags (proxy count)",
+      "gridPos": { "h": 10, "w": 12, "x": 12, "y": 48 },
+      "datasource": { "type": "prometheus", "uid": "${datasource}" },
+      "fieldConfig": {
+        "defaults": {
+          "color": { "mode": "palette-classic" },
+          "min": 0,
+          "unit": "short"
+        },
+        "overrides": []
+      },
+      "options": {
+        "displayMode": "gradient",
+        "orientation": "horizontal",
+        "reduceOptions": { "calcs": ["lastNotNull"], "fields": "", "values": false },
+        "showUnfilled": true,
+        "valueMode": "color"
+      },
+      "targets": [
+        {
+          "expr": "sum by (flag) (xray_geocheck_reputation_flag{proxy=~\"$proxy\"} == 1)",
+          "legendFormat": "{{flag}}",
+          "refId": "A",
+          "instant": true
+        }
+      ]
+    },
+    {
+      "id": 14,
+      "type": "row",
+      "title": "AI / path",
+      "gridPos": { "h": 1, "w": 24, "x": 0, "y": 58 },
+      "collapsed": false,
+      "panels": []
+    },
+    {
+      "id": 15,
+      "type": "timeseries",
+      "title": "AI endpoint RTT (ms)",
+      "gridPos": { "h": 9, "w": 12, "x": 0, "y": 59 },
+      "datasource": { "type": "prometheus", "uid": "${datasource}" },
+      "fieldConfig": {
+        "defaults": {
+          "color": { "mode": "palette-classic" },
+          "custom": { "drawStyle": "line", "fillOpacity": 6, "lineWidth": 1, "showPoints": "never" },
+          "unit": "ms"
+        },
+        "overrides": []
+      },
+      "options": {
+        "legend": { "calcs": ["mean"], "displayMode": "table", "placement": "bottom" },
+        "tooltip": { "mode": "multi", "sort": "desc" }
+      },
+      "targets": [
+        {
+          "expr": "xray_geocheck_ai_rtt_ms{proxy=~\"$proxy\"}",
+          "legendFormat": "{{proxy}} {{id}}",
+          "refId": "A"
+        }
+      ]
+    },
+    {
+      "id": 16,
+      "type": "bargauge",
+      "title": "Path connectivity score",
+      "gridPos": { "h": 9, "w": 6, "x": 12, "y": 59 },
+      "datasource": { "type": "prometheus", "uid": "${datasource}" },
+      "fieldConfig": {
+        "defaults": {
+          "color": { "mode": "thresholds" },
+          "max": 100,
+          "min": 0,
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              { "color": "red", "value": null },
+              { "color": "yellow", "value": 40 },
+              { "color": "green", "value": 70 }
+            ]
+          }
+        },
+        "overrides": []
+      },
+      "options": {
+        "displayMode": "gradient",
+        "orientation": "horizontal",
+        "reduceOptions": { "calcs": ["lastNotNull"], "fields": "", "values": false },
+        "showUnfilled": true,
+        "valueMode": "color"
+      },
+      "targets": [
+        {
+          "expr": "xray_geocheck_connectivity_score{proxy=~\"$proxy\"}",
+          "legendFormat": "{{proxy}}",
+          "refId": "A",
+          "instant": true
+        }
+      ]
+    },
+    {
+      "id": 17,
+      "type": "table",
+      "title": "Geo provider errors",
+      "gridPos": { "h": 9, "w": 6, "x": 18, "y": 59 },
+      "datasource": { "type": "prometheus", "uid": "${datasource}" },
+      "fieldConfig": {
+        "defaults": { "custom": { "filterable": true } },
+        "overrides": []
+      },
+      "options": { "cellHeight": "sm", "showHeader": true },
+      "transformations": [
+        {
+          "id": "organize",
+          "options": {
+            "excludeByName": { "Time": true, "Value": true, "__name__": true },
+            "renameByName": {
+              "proxy": "Proxy",
+              "group": "Group",
+              "id": "Provider",
+              "ip_version": "IP"
+            }
+          }
+        }
+      ],
+      "targets": [
+        {
+          "expr": "xray_geocheck_geo_error{proxy=~\"$proxy\"} == 1",
+          "format": "table",
+          "instant": true,
+          "refId": "A"
+        }
+      ]
+    }
+  ],
+  "refresh": "1m",
+  "schemaVersion": 39,
+  "tags": ["xray", "geocheck"],
+  "templating": {
+    "list": [
+      {
+        "current": {},
+        "hide": 0,
+        "includeAll": false,
+        "label": "Datasource",
+        "name": "datasource",
+        "options": [],
+        "query": "prometheus",
+        "refresh": 1,
+        "regex": "",
+        "type": "datasource"
+      },
+      {
+        "allValue": ".*",
+        "current": { "selected": true, "text": "All", "value": "$__all" },
+        "datasource": { "type": "prometheus", "uid": "${datasource}" },
+        "definition": "label_values(xray_geocheck_proxy_up, proxy)",
+        "hide": 0,
+        "includeAll": true,
+        "label": "Proxy",
+        "multi": true,
+        "name": "proxy",
+        "options": [],
+        "query": { "query": "label_values(xray_geocheck_proxy_up, proxy)", "refId": "PrometheusVariableQueryEditor-VariableQuery" },
+        "refresh": 2,
+        "regex": "",
+        "sort": 1,
+        "type": "query"
+      },
+      {
+        "current": { "selected": true, "text": "ipv4", "value": "ipv4" },
+        "hide": 0,
+        "includeAll": false,
+        "label": "IP version",
+        "multi": false,
+        "name": "ip_version",
+        "options": [
+          { "selected": true, "text": "ipv4", "value": "ipv4" },
+          { "selected": false, "text": "ipv6", "value": "ipv6" }
+        ],
+        "query": "ipv4,ipv6",
+        "skipUrlSync": false,
+        "type": "custom"
+      }
+    ]
+  },
+  "time": { "from": "now-12h", "to": "now" },
+  "timepicker": {},
+  "timezone": "browser",
+  "title": "Xray Geocheck",
+  "uid": "xray-geocheck",
+  "version": 2,
+  "weekStart": ""
+}

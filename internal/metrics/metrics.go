@@ -2,6 +2,7 @@ package metrics
 
 import (
 	"encoding/json"
+	"strings"
 
 	"github.com/prometheus/client_golang/prometheus"
 	"github.com/prometheus/client_golang/prometheus/promauto"
@@ -20,6 +21,8 @@ type Collector struct {
 	geoError          *prometheus.GaugeVec
 	stashAvailable    *prometheus.GaugeVec
 	stashRTT          *prometheus.GaugeVec
+	stashInfo         *prometheus.GaugeVec
+	reputationTags    *prometheus.GaugeVec
 	aiRTT             *prometheus.GaugeVec
 	connectivityScore *prometheus.GaugeVec
 	lastSuccess       *prometheus.GaugeVec
@@ -55,6 +58,12 @@ func New() *Collector {
 		stashRTT: promauto.NewGaugeVec(prometheus.GaugeOpts{
 			Name: ns + "_stash_rtt_ms", Help: "Stash/access check RTT",
 		}, []string{"proxy", "id"}),
+		stashInfo: promauto.NewGaugeVec(prometheus.GaugeOpts{
+			Name: ns + "_stash_info", Help: "Access check row (value 1) with service, state and region labels",
+		}, []string{"proxy", "service", "state", "region"}),
+		reputationTags: promauto.NewGaugeVec(prometheus.GaugeOpts{
+			Name: ns + "_reputation_tags", Help: "Active reputation flags joined in the tags label",
+		}, []string{"proxy", "tags"}),
 		aiRTT: promauto.NewGaugeVec(prometheus.GaugeOpts{
 			Name: ns + "_ai_rtt_ms", Help: "AI endpoint RTT",
 		}, []string{"proxy", "id"}),
@@ -77,6 +86,8 @@ func (c *Collector) Update(snap model.Snapshot) {
 	c.geoError.Reset()
 	c.stashAvailable.Reset()
 	c.stashRTT.Reset()
+	c.stashInfo.Reset()
+	c.reputationTags.Reset()
 	c.aiRTT.Reset()
 	c.connectivityScore.Reset()
 
@@ -114,9 +125,19 @@ func (c *Collector) applyReport(proxy string, raw json.RawMessage) {
 		if risk, ok := asFloat(rep["risk"]); ok {
 			c.reputationRisk.WithLabelValues(proxy).Set(risk)
 		}
+		var active []string
 		for _, flag := range []string{"residential", "proxy", "vpn", "tor", "hosting", "scraper", "compromised", "anonymous"} {
-			c.reputationFlag.WithLabelValues(proxy, flag).Set(bool01(rep[flag]))
+			on := bool01(rep[flag])
+			c.reputationFlag.WithLabelValues(proxy, flag).Set(on)
+			if on == 1 {
+				active = append(active, flag)
+			}
 		}
+		tags := strings.Join(active, ", ")
+		if tags == "" {
+			tags = "none"
+		}
+		c.reputationTags.WithLabelValues(proxy, tags).Set(1)
 	}
 	if cons, ok := r["consensus"].(map[string]any); ok {
 		emitConsensus := func(ver string, v any) {
@@ -157,11 +178,23 @@ func (c *Collector) applyReport(proxy string, raw json.RawMessage) {
 			}
 			id, _ := m["id"].(string)
 			state, _ := m["state"].(string)
+			region, _ := m["region"].(string)
+			service, _ := m["name"].(string)
+			if service == "" {
+				service = id
+			}
+			if state == "" {
+				state = "unknown"
+			}
+			if region == "" {
+				region = "-"
+			}
 			avail := 0.0
 			if state == "available" {
 				avail = 1
 			}
 			c.stashAvailable.WithLabelValues(proxy, id).Set(avail)
+			c.stashInfo.WithLabelValues(proxy, service, state, region).Set(1)
 			if rtt, ok := asFloat(m["rtt_ms"]); ok {
 				c.stashRTT.WithLabelValues(proxy, id).Set(rtt)
 			}
