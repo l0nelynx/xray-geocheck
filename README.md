@@ -9,7 +9,7 @@ The container downloads pinned **xray-core** and **geocheck** binaries at startu
 
 TLS is not terminated here; put the service behind an external reverse proxy if you need HTTPS.
 
-Live UI demo (sample data, no live subscription): [https://l0nelynx.github.io/xray-geocheck/](https://l0nelynx.github.io/xray-geocheck/)
+Live UI demo (sample data, no live subscription): [https://xray-geocheck.vercel.app](https://xray-geocheck.vercel.app)
 
 ## Quick start
 
@@ -108,7 +108,7 @@ If a git tag or GitHub Release with that version already exists, the workflow fa
 
 ## Demo
 
-The GitHub Pages site is a static Vite build (`VITE_DEMO=true`) with a canned snapshot. Refresh buttons spin and leave the same sample rows.
+The Vercel site is a static Vite build (`VITE_DEMO=true`) with a canned snapshot. Refresh buttons spin and leave the same sample rows.
 
 Local preview:
 
@@ -119,7 +119,10 @@ npm run build:demo
 npm run preview
 ```
 
-Pages deploys on every push to `main`. Repo Settings → Pages → Source must be **GitHub Actions**. GitHub Free does not publish Pages from a private repository.
+Vercel deploys on every push to `main` (and via Actions → Vercel demo → Run workflow). One-time setup:
+
+1. Create a Vercel project named `xray-geocheck` with **Root Directory** `web` (or `npx vercel` from `web/`).
+2. Add repository secrets: `VERCEL_TOKEN`, `VERCEL_ORG_ID`, `VERCEL_PROJECT_ID` (token from Vercel account settings; IDs from the project settings or `.vercel/project.json` after linking).
 
 ## Grafana
 

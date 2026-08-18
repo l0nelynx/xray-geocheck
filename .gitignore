@@ -7,3 +7,5 @@ web/dist/
 *.exe
 *.log
 .DS_Store
+.vercel
+web/.vercel
