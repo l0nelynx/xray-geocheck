@@ -119,10 +119,7 @@ npm run build:demo
 npm run preview
 ```
 
-Vercel deploys on every push to `main` (and via Actions → Vercel demo → Run workflow). One-time setup:
-
-1. Create a Vercel project named `xray-geocheck` with **Root Directory** `web` (or `npx vercel` from `web/`).
-2. Add repository secrets: `VERCEL_TOKEN`, `VERCEL_ORG_ID`, `VERCEL_PROJECT_ID` (token from Vercel account settings; IDs from the project settings or `.vercel/project.json` after linking).
+Vercel Git integration deploys the demo on every push to `main`. In the Vercel project: **Settings → General → Root Directory** leave empty (repo root; [`vercel.json`](vercel.json) builds `web/`) or set it to `web` (then [`web/vercel.json`](web/vercel.json) is used). Build command must stay `npm run build:demo`.
 
 ## Grafana
 
