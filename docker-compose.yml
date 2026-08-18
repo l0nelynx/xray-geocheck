@@ -1,6 +1,7 @@
 services:
   xray-geocheck:
-    build: .
+    image: ghcr.io/l0nelynx/xray-geocheck:latest
+    pull_policy: always
     container_name: xray-geocheck
     ports:
 #      - "8080:8080"

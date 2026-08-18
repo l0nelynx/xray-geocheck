@@ -13,14 +13,30 @@ Live UI demo (sample data, no live subscription): [https://xray-geocheck.vercel.
 
 ## Quick start
 
+Deploy with two files from this repo: [`docker-compose.yml`](docker-compose.yml) and [`.env.example`](.env.example). No source tree or local build.
+
 ```bash
 cp .env.example .env
-docker compose up --build
+# edit SUBSCRIPTION_URL (and UI_BASE_PATH if behind a reverse proxy)
+
+docker login ghcr.io
+docker compose up -d
 ```
+
+The image is `ghcr.io/l0nelynx/xray-geocheck:latest`. The package is private while this repository is private, so `docker login ghcr.io` is required.
+
+Uncomment `8080:8080` in the compose file if the status page is not behind nginx.
 
 - Status page: [http://localhost:8080](http://localhost:8080)
 - Prometheus: [http://localhost:3113/metrics](http://localhost:3113/metrics) (`METRICS_HOST` / `METRICS_PORT` / `METRICS_BASE_PATH`)
 - JSON snapshot: [http://localhost:8080/api/status](http://localhost:8080/api/status)
+
+Update:
+
+```bash
+docker compose pull
+docker compose up -d
+```
 
 Manual refresh (status page buttons, or):
 
@@ -66,6 +82,8 @@ Both Xray JSON arrays (`{ remarks, outbounds }`) and base64 share-link lists are
 
 Binaries are **not** baked into the image. They are fetched on every cold start into `BIN_DIR` (default `/opt/xray-geocheck/bin`).
 
+To build the image from this repo instead of pulling GHCR: `docker compose build` after putting `build: .` back on the service.
+
 ## Reverse proxy
 
 Set `UI_BASE_PATH` to the nginx location (no trailing slash). Example for `/geocheck/`:
@@ -97,7 +115,8 @@ That job:
 - Creates a GitHub Release with those binaries and `SHA256SUMS`
 
 ```bash
-docker pull ghcr.io/l0nelynx/xray-geocheck:v1.2.3
+docker pull ghcr.io/l0nelynx/xray-geocheck:latest
+docker pull ghcr.io/l0nelynx/xray-geocheck:v0.1.0
 ```
 
 The package is private while this repository is private; `docker login ghcr.io` is required.
